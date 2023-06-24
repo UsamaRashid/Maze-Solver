@@ -1,33 +1,97 @@
-# Chess Board Hill Climbing
+# Maze Solver
 
-This code implements a hill climbing algorithm to solve the N-Queens problem on a chessboard. The goal is to place N queens on an N×N chessboard such that no two queens threaten each other.
+This repository contains Python code that implements a maze-solving algorithm using Depth-First Search (DFS). The code takes an initial maze state and finds the path from a start state to a goal state.
 
-## Code Overview
+## Maze Representation
 
-The code is written in Python and consists of the following main parts:
+The maze is represented as a 2-dimensional array, where each element represents a cell in the maze. The following conventions are used:
 
-1. **ChessBoard**: It defines an 8x8 chessboard represented as a 2D list. Each element in the list represents a cell on the chessboard, and a value of 1 represents the presence of a queen in that cell.
+- `0`: Represents a wall or obstacle in the maze.
+- `1`: Represents an open path or corridor in the maze.
 
-2. **printBoard**: This function is used to print the current state of the chessboard.
+The initial maze is defined in the `initial_State_maze` variable as a 2D array.
 
-3. **placeQueen**: This function randomly places queens on the chessboard by setting the value of corresponding cells to 1.
+## Available Functions
 
-4. **CheckRight**: This function checks for queens attacking in the same row to the right of the given cell.
+The code provides several functions to facilitate maze solving:
 
-5. **CheckUpDiagonal**: This function checks for queens attacking in the diagonal above and to the left of the given cell.
+### Check_Up(maze, currentState)
 
-6. **CheckDownDiagonal**: This function checks for queens attacking in the diagonal below and to the left of the given cell.
+This function checks if there is an open path in the upward direction from the current state in the maze. It returns `True` if there is an open path and `False` otherwise.
 
-7. **objectiveFunc**: This function calculates the number of queens attacking each other on the chessboard.
+### Check_Left(maze, currentState)
 
-8. **hillClimbing**: This function implements the hill climbing algorithm to find a solution to the N-Queens problem. It iteratively searches for a better state by moving queens to positions that reduce the number of attacks. The algorithm terminates when it reaches a state where no better moves can be made.
+This function checks if there is an open path in the leftward direction from the current state in the maze. It returns `True` if there is an open path and `False` otherwise.
 
-9. **Main Function**: The main function initializes the chessboard, places queens on it, and then calls the objective function to calculate the number of attacks. Finally, it calls the hillClimbing function to find an optimal solution to the problem.
+### Check_Right(maze, currentState)
+
+This function checks if there is an open path in the rightward direction from the current state in the maze. It returns `True` if there is an open path and `False` otherwise.
+
+### Check_Down(maze, currentState)
+
+This function checks if there is an open path in the downward direction from the current state in the maze. It returns `True` if there is an open path and `False` otherwise.
+
+### Node_dfs(direction, x, y)
+
+This class represents a node in the Depth-First Search algorithm. It stores the direction, x-coordinate, and y-coordinate of a node.
+
+### ValidateVisitedNodes(x, y, visitednodes)
+
+This function checks if a node with the given x and y coordinates has been visited before. It returns `True` if the node has not been visited, and `False` otherwise.
+
+### ValidateVisitedNodes_DFS(direction, x, y, visitednodes)
+
+This function checks if a node with the given direction, x, and y coordinates has been visited before. It returns `True` if the node has not been visited, and `False` otherwise.
+
+### create_node(state, x, y)
+
+This function creates a new `Node_dfs` object with the given state, x-coordinate, and y-coordinate.
+
+### dfs_Algo(maze, startState, goalState)
+
+This function implements the Depth-First Search algorithm to find the path from the start state to the goal state in the maze. It returns the cost (number of steps) required to reach the goal state.
+
+### bfs_Algo(maze, startState, goalState)
+
+This function implements the Breadth-First Search algorithm to find the path from the start state to the goal state in the maze. It returns the cost (number of steps) required to reach the goal state.
 
 ## Usage
 
-To use this code, simply run it in a Python environment. The chessboard and the initial placement of queens can be modified by uncommenting one of the predefined chessboard configurations. The output will display the initial chessboard, the number of queens attacking each other, and the final chessboard after applying the hill climbing algorithm.
+To use the maze solver algorithm, follow these steps:
 
-Note: The code currently assumes an 8x8 chessboard, but it can be easily modified to work with different board sizes by adjusting the size of the `ChessBoard` list and the arguments passed to the functions.
+1. Define the initial maze state by modifying the `initial_State_maze` variable.
 
-Feel free to experiment with different configurations and board sizes to solve the N-Queens problem!
+2. Set the `start_State` and `goalState` variables to the desired start and goal states in the maze.
+
+3. Run the script.
+
+## Example
+
+```python
+# Define the initial maze state
+initial_State_maze = [
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0],
+    [0, 
+
+1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0],
+    [0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0],
+    [0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 1],
+    [0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+    [0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+    [0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+    [0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0],
+    [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0],
+    [1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+]
+
+# Set the start and goal states
+start_State = [4, 11]
+goalState = [10, 0]
+
+# Solve the maze using Depth-First Search
+cost_dfs = dfs_Algo(initial_State_maze, start_State, goalState)
+print("The Total Cost Using DFS Is:", cost_dfs)
+```
+
